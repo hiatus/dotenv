@@ -68,3 +68,64 @@ elif hash curl 2> /dev/null; then
 		echo $(curl whatismyip.akamai.com 2> /dev/null)
 	}
 fi
+
+## IO
+.net.io.download()
+{
+	local ifaces rx1=0 rx2=0
+
+	if [[ $# -gt 1 || ! -d "/sys/class/net/${1}" ]]; then
+		echo "${FUNCNAME[0]} [iface]?"
+		echo '└─ Print the current download throughput'
+
+		return 1
+	fi
+
+	[ -n "$1" ] && ifaces=("$1") || ifaces=($(ls '/sys/class/net'))
+
+	for iface in "${ifaces[@]}"; do
+		rx1=$[rx1 + $(<"/sys/class/net/${iface}/statistics/rx_bytes")]
+	done
+
+	sleep 1
+
+	for iface in "${ifaces[@]}"; do
+		rx2=$[rx2 + $(<"/sys/class/net/${iface}/statistics/rx_bytes")]
+	done
+
+	if ! command -v bc > /dev/null; then
+		echo "$[rx2 - rx1] B/s"
+	else
+		echo "$(bc <<< "scale=2; (${rx2} - ${rx1}) / 1024 / 1024") Mb/s"
+	fi
+}
+
+.net.io.upload()
+{
+	local ifaces tx1=0 tx2=0
+
+	if [[ $# -gt 1 || ! -d "/sys/class/net/${1}" ]]; then
+		echo "${FUNCNAME[0]} [iface]?"
+		echo '└─ Print the current upload throughput'
+
+		return 1
+	fi
+
+	[ -n "$1" ] && ifaces=("$1") || ifaces=($(ls '/sys/class/net'))
+
+	for iface in "${ifaces[@]}"; do
+		tx1=$[tx1 + $(<"/sys/class/net/${iface}/statistics/tx_bytes")]
+	done
+
+	sleep 1
+
+	for iface in "${ifaces[@]}"; do
+		tx2=$[tx2 + $(<"/sys/class/net/${iface}/statistics/tx_bytes")]
+	done
+
+	if ! command -v bc > /dev/null; then
+		echo "$[tx2 - tx1] B/s"
+	else
+		echo "$(bc <<< "scale=2; (${tx2} - ${tx1}) / 1024 / 1024") Mb/s"
+	fi
+}
