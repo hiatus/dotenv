@@ -1,5 +1,5 @@
 if [ -z "$BASH_VERSION" ]; then
-	echo '[!] .dotrc: this shell is not bash'
+	echo '[!] load.bash: this shell is not bash'
 	return 1
 fi
 
