@@ -1,10 +1,10 @@
 dotenv
 ======
-Bash functions to help in common workflows. All functions are prefixed with `.` such as `.dump.hex`,
-a function that dumps input to the standard output as a hexadecimal string. To display all available
-functions, just type `.<Tab><Tab>` after sourcing `load.bash` and shell completion should do the
-job. You can also extend `dotenv` by creating a folder named `local` inside `src` and storing your
-files there (this folder is already ignored in `.gitignore`).
+A set of bash functions to help the CLI workflow. All functions are prefixed with `.` such as
+`.dump.hex`, a function that dumps input to the standard output as a hexadecimal string. To display
+all available functions, just type `.<Tab><Tab>` after sourcing `load.bash` and shell completion
+should do the job. You can also extend `dotenv` by creating a folder named `local` inside `src` and
+storing your files there (this folder is already ignored in `.gitignore`).
 
 
 Installation
