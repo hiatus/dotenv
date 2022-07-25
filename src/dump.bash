@@ -27,7 +27,7 @@ if hash hexdump 2> /dev/null; then
 		echo
 	}
 
-	.dump.array()
+	.dump.hex.array()
 	{
 		if [[ -n "$1" && ! -r "$1" ]]; then
 			echo "${FUNCNAME[0]} [file]?"
@@ -58,7 +58,7 @@ if hash hexdump 2> /dev/null; then
 		echo '};'
 	}
 
-	.dump.str()
+	.dump.hex.str()
 	{
 		if [[ -n "$1" && ! -r "$1" ]]; then
 			echo "${FUNCNAME[0]} [file]?"
