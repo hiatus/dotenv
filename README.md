@@ -10,7 +10,10 @@ storing your files there (this folder is already ignored in `.gitignore`).
 Installation
 ------------
 Simply source `load.bash` from within a bash session.
+```bash
+git clone https://github.com/hiatus/dotenv
+. dotenv/load.bash
 ```
-user@host:~$ git clone https://github.com/hiatus/dotenv
-user@host:~$ . dotenv/load.bash
-```
+
+Alternatively, you can source `dotenv` inside `~/.bashrc` to make functions available by default on
+all bash sessions.
