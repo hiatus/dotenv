@@ -1,3 +1,18 @@
+if hash xxd 2> /dev/null; then
+	.dump.bin()
+	{
+		if [[ -n "$1" && ! -r "$1" ]]; then
+			echo "${FUNCNAME[0]} [file]?"
+			echo '└─ Dump [file] or stdin to binary'
+
+			return 1
+		fi
+
+		xxd -b "${1:-/dev/stdin}" |	grep -oE '([01]{8}\ )+' | tr -d '[[:space:]]'
+		echo
+	}
+fi
+
 if hash hexdump 2> /dev/null; then
 	.dump.hex()
 	{
