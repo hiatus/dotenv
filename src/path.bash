@@ -2,11 +2,11 @@
 {
 	local age newest_name newest_age=$(date +%s)
 
-	if [ $# -eq 0 ]; then
+	if [[ "$1" =~ ^\-(h|\-help)$ || $# -eq 0 ]]; then
 		echo "${FUNCNAME[0]} [file].."
 		echo '└─ Print the name of the newest [file]'
 
-		return 1
+		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
 
 	for f in "$@"; do
@@ -30,11 +30,11 @@
 {
 	local age oldest_name oldest_age=$(date +%s)
 
-	if [ $# -eq 0 ]; then
+	if [[ "$1" =~ ^\-(h|\-help)$ || $# -eq 0 ]]; then
 		echo "${FUNCNAME[0]} [file].."
 		echo '└─ Print the name of the oldest [file]'
 
-		return 1
+		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
 
 	for f in "$@"; do
@@ -56,11 +56,11 @@
 
 .path.rename.lower()
 {
-	if [ $# -eq 0 ]; then
+	if [[ "$1" =~ ^\-(h|\-help)$ || $# -eq 0 ]]; then
 		echo "${FUNCNAME[0]} [file].."
 		echo '└─ Rename [file] to lowercase'
 
-		return 1
+		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
 
 	for f in "$@"; do
@@ -74,11 +74,11 @@
 
 .path.rename.upper()
 {
-	if [ $# -eq 0 ]; then
+	if [[ "$1" =~ ^\-(h|\-help)$ || $# -eq 0 ]]; then
 		echo "${FUNCNAME[0]} [file].."
 		echo '└─ Rename [file] to uppercase'
 
-		return 1
+		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
 
 	for f in "$@"; do
@@ -92,11 +92,11 @@
 
 .path.rename.capitalize()
 {
-	if [ $# -eq 0 ]; then
+	if [[ "$1" =~ ^\-(h|\-help)$ ||  $# -eq 0 ]]; then
 		echo "${FUNCNAME[0]} [file].."
 		echo '└─ Rename [file] to capitalized'
 
-		return 1
+		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
 
 	for f in "$@"; do
@@ -116,7 +116,7 @@
 		echo "${FUNCNAME[0]} [md5|sha1|sha224|sha256|sha384|sha512] [file].."
 		echo "└─ Rename [file] to it's hash (preserving filename extensions)"
 
-		return 1
+		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
 
 	for f in "${@:2}"; do

@@ -1,11 +1,11 @@
 if hash xxd 2> /dev/null; then
 	.dump.bin()
 	{
-		if [[ -n "$1" && ! -r "$1" ]]; then
+		if [[ "$1" =~ ^\-(h|\-help)$ || -n "$1" && ! -r "$1" ]]; then
 			echo "${FUNCNAME[0]} [file]?"
 			echo '└─ Dump [file] or stdin to binary'
 
-			return 1
+			[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 		fi
 
 		xxd -b "${1:-/dev/stdin}" |	grep -oE '([01]{8}\ )+' | tr -d '[[:space:]]'
@@ -16,11 +16,11 @@ fi
 if hash hexdump 2> /dev/null; then
 	.dump.hex()
 	{
-		if [[ -n "$1" && ! -r "$1" ]]; then
+		if [[ "$1" =~ ^\-(h|\-help)$ || -n "$1" && ! -r "$1" ]]; then
 			echo "${FUNCNAME[0]} [file]?"
 			echo '└─ Dump [file] or stdin to hexadecimal'
 
-			return 1
+			[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 		fi
 
 		hexdump -ve '/1 "%02x"' "${1:-/dev/stdin}"
@@ -29,11 +29,11 @@ if hash hexdump 2> /dev/null; then
 
 	.dump.hex.array()
 	{
-		if [[ -n "$1" && ! -r "$1" ]]; then
+		if [[ "$1" =~ ^\-(h|\-help)$ || -n "$1" && ! -r "$1" ]]; then
 			echo "${FUNCNAME[0]} [file]?"
 			echo '└─ Dump [file] or stdin to a C byte array'
 
-			return 1
+			[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 		fi
 
 		local dump=$(
@@ -60,11 +60,11 @@ if hash hexdump 2> /dev/null; then
 
 	.dump.hex.str()
 	{
-		if [[ -n "$1" && ! -r "$1" ]]; then
+		if [[ "$1" =~ ^\-(h|\-help)$ || -n "$1" && ! -r "$1" ]]; then
 			echo "${FUNCNAME[0]} [file]?"
 			echo '└─ Dump [file] or stdin to an escaped hex string'
 
-			return 1
+			[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 		fi
 
 		hexdump -ve '"\\\x" 1/1 "%02x"' "${1:-/dev/stdin}"

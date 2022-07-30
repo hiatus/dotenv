@@ -6,7 +6,7 @@
 		echo "${FUNCNAME[0]}"
 		echo '└─ Print usage for each and all CPU cores'
 
-		return 1
+		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
 
 	prev=$(grep -E ^cpu[0-9]+ /proc/stat)
@@ -35,7 +35,7 @@
 		echo "${FUNCNAME[0]}"
 		echo '└─ Print memory usage information'
 
-		return 1
+		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
 
 	meminfo=$(</proc/meminfo)
@@ -57,7 +57,7 @@
 		echo "${FUNCNAME[0]}"
 		echo '└─ Print power information'
 
-		return 1
+		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
 
 	for bat in $(ls -d /sys/class/power_supply/BAT*); do
@@ -76,7 +76,7 @@
 		echo "${FUNCNAME[0]}"
 		echo '└─ Print temperature information'
 
-		return 1
+		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
 
 	for zone in $(ls -d /sys/class/thermal/thermal_zone*); do
