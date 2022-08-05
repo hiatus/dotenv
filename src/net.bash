@@ -9,7 +9,7 @@
 		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
 
-	ip r | awk '/default/ {print $3}'
+	ip r | awk '/default via/ {print $3}'
 }
 
 # Subnet
@@ -22,7 +22,7 @@
 		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
 
-	ip r | awk '/link src/ {print $1}'
+	ip r | awk '/src / {print $1}'
 }
 
 # LAN address
@@ -35,7 +35,7 @@
 		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
 
-	ip r | awk '/dhcp src/ {print $9}'
+	ip r | awk '/src / {print $9}'
 }
 
 ## WAN
