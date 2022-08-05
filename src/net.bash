@@ -76,7 +76,7 @@ fi
 
 	if [[ "$1" =~ ^\-(h|\-help)$ || $# -ne 0 && ! -d "/sys/class/net/${1}" ]]; then
 		echo "${FUNCNAME[0]} [iface]?"
-		echo '└─ Print the current download throughput'
+		echo '└─ Print the current download throughput of one or all interfaces'
 
 		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
