@@ -1,4 +1,4 @@
-.tty.dimesions()
+.tty.dimensions()
 {
 	if [ $# -ne 0 ]; then
 		echo "${FUNCNAME[0]} [file] [float]"
