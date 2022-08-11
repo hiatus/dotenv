@@ -1,3 +1,34 @@
+.path.size()
+{
+	local size desc
+
+	if [[ "$1" =~ ^\-(h|\-help)$ || $# -eq 0 ]]; then
+		echo "${FUNCNAME[0]} [file].."
+		echo '└─ Print the size of each [file] in an informational manner'
+
+		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
+	fi
+
+	for f in "$@"; do
+		if ! [ -f "$f" ]; then
+			echo "[!] No such file: '${f}'"
+			return 1
+		fi
+	done
+
+	for f in "$@"; do
+		size=$(stat -c '%s' "$f")
+		desc="${size} bytes"
+
+		[ $size -ge 1000 ]       && desc="$[${size} / 1000 ] Kb, ${desc}"
+		[ $size -ge 1000000 ]    && desc="$[${size} / 1000000 ] Mb, ${desc}"
+		[ $size -ge 1000000000 ] && desc="$[${size} / 1000000000 ] Gb, ${desc}"
+
+		[ $# -gt 1 ] && echo "${f}: ${desc}" || echo "${desc}"
+	done
+}
+
+
 .path.newest()
 {
 	local age newest_name newest_age=$(date +%s)
