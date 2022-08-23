@@ -49,7 +49,7 @@
 	echo "Available : $(bc <<< "${memavlb} / 1024") Mb"
 }
 
-.sys.power()
+[ -d /sys/class/power_supply/BAT0 ] && .sys.power()
 {
 	local stt cap
 
@@ -68,7 +68,7 @@
 	done
 }
 
-.sys.temperature()
+[ -d /sys/class/thermal/thermal_zone0 ] && .sys.temperature()
 {
 	local tzn=0 ttz=0 avg=0
 
