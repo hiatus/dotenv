@@ -1,6 +1,5 @@
-## LAN
 # Gateway address
-.net.lan.gateway()
+.net.gateway()
 {
 	if [ $# -ne 0 ]; then
 		echo "${FUNCNAME[0]}"
@@ -12,6 +11,7 @@
 	ip r | awk '/default via/ {print $3}'
 }
 
+## LAN
 # Subnet
 .net.lan.subnet()
 {
