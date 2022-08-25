@@ -38,7 +38,7 @@
 
 .random.alnum()
 {
-	if [[ $# -eq 1 && "$1" =~ ^[1-9][0-9]*$ ]]; then
+	if ! [[ $# -eq 1 && "$1" =~ ^[1-9][0-9]*$ ]]; then
 		echo "${FUNCNAME[0]} [n]"
 		echo '└─ Write [n] random alphanumeric characters to stdout'
 
@@ -51,7 +51,7 @@
 
 .random.punct()
 {
-	if [[ $# -eq 1 && "$1" =~ ^[1-9][0-9]*$ ]]; then
+	if ! [[ $# -eq 1 && "$1" =~ ^[1-9][0-9]*$ ]]; then
 		echo "${FUNCNAME[0]} [n]"
 		echo '└─ Write [n] random punctuation characters to stdout'
 
@@ -64,7 +64,7 @@
 
 .random.text()
 {
-	if [[ $# -eq 1 && "$1" =~ ^[1-9][0-9]*$ ]]; then
+	if ! [[ $# -eq 1 && "$1" =~ ^[1-9][0-9]*$ ]]; then
 		echo "${FUNCNAME[0]} [n]"
 		echo '└─ Write [n] random text characters to stdout'
 
