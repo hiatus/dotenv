@@ -37,21 +37,21 @@ if hash hexdump 2> /dev/null; then
 		fi
 
 		local dump=$(
-			hexdump -ve '"\t" 1/1 "0x%02x" 7/1 ", 0x%02x" ",\n"' "${1:-/dev/stdin}"
+			hexdump -ve '"\t" 1/1 "0x%02x" 11/1 ", 0x%02x" ",\n"' "${1:-/dev/stdin}"
 		)
 
 		local last=$(
 			grep '0x ' <<< "$dump"
 		)
 
-		echo 'const uint8_t data[] = {'
+		echo '{'
 
 		head -n -1 <<< "$dump"
 
 		if [[ -z "$last" ]]; then
-			local cutto=8
+			local cutto=12
 		else
-			local cutto=$[8 - $(grep -oE '0x ' <<< "$last" | wc -l)]
+			local cutto=$[12 - $(grep -oE '0x ' <<< "$last" | wc -l)]
 		fi
 
 		tail -1 <<< "$dump" | cut -d ',' -f -${cutto}
