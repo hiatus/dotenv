@@ -26,8 +26,7 @@
 {
 	if [ $# -ne 0 ]; then
 		echo "${FUNCNAME[0]} [file] [float]"
-		echo '├ Save a script session to [file].txz'
-		echo '└ Optionally limit timing intervals to [float] seconds'
+		echo '└ Display terminal dimensions'
 
 		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
