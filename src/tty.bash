@@ -1,3 +1,27 @@
+.tty.raw()
+{
+	if [ $# -ne 0 ]; then
+		echo "${FUNCNAME[0]}"
+		echo '└ Set terminal to raw mode'
+
+		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
+	fi
+
+	stty raw -echo
+}
+
+.tty.raw()
+{
+	if [ $# -ne 0 ]; then
+		echo "${FUNCNAME[0]}"
+		echo '└ Set terminal to "cooked" mode'
+
+		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
+	fi
+
+	stty -raw echo
+}
+
 .tty.dimensions()
 {
 	if [ $# -ne 0 ]; then
