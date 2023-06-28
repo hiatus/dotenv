@@ -38,36 +38,18 @@
 	ip r | awk '/src / {print $9}'
 }
 
-## WAN
-# External IP address
-if hash dig 2> /dev/null; then
-	# From DNS server
-	.net.wan.ipv4()
-	{ 
-		if [ $# -ne 0 ]; then
-			echo "${FUNCNAME[0]}"
-			echo '└─ Print WAN IPv4 address'
+# WAN address
+.net.wan.ipv4()
+{
+	if [ $# -ne 0 ]; then
+		echo "${FUNCNAME[0]}"
+		echo '└─ Print WAN IPv4 address'
 
-			[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
-		fi
+		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
+	fi
 
-		dig +short myip.opendns.com @resolver4.opendns.com
-	}
-
-elif hash curl 2> /dev/null; then
-	# From HTTP server
-	net.wan.ipv4()
-	{
-		if [ $# -ne 0 ]; then
-			echo "${FUNCNAME[0]}"
-			echo '└─ Show the current IPv4 address(es)'
-
-			[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
-		fi
-
-		echo $(curl whatismyip.akamai.com 2> /dev/null)
-	}
-fi
+	host myip.opendns.com resolver4.opendns.com | awk '/address/ { print $NF }'
+}
 
 ## IO
 .net.io.download()
