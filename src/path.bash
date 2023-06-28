@@ -141,7 +141,7 @@
 
 .path.rename.hash()
 {
-	local d b x
+	local d b e
 
 	if ! [[ "$1" =~ ^(md5|sha1|sha256)$ && -e "$2" ]]; then
 		echo "${FUNCNAME[0]} [md5|sha1|sha224|sha256|sha384|sha512] [file].."
@@ -151,23 +151,29 @@
 	fi
 
 	for f in "${@:2}"; do
-		if ! [ -e "$f" ]; then
-			echo "[-] No such file or directory: '${f}'"
+		if ! [ -f "$f" ]; then
+			if [ -d "$f" ]; then
+				echo "[-] Skipping directory '${f}'"
+			else
+				echo "[-] No such file: '${f}'"
+			fi
+
 			continue
 		fi
 
-		d="$(dirname  "$file")"
-		b="$(basename "$file")"
+		d="$(dirname  "$f")"
+		b="$(basename "$f")"
+		e=".${b#*.}"
 
-		[[ "$b" =~ \. ]] && x=".${f#*.}" || x=''
+		[[ "$e" = ".${b}" ]] && e=''
 
 		case "$1" in
-			md5)    mv "$f" "${d}/$(md5sum    "$f" | cut -d ' ' -f 1)${x}" ;;
-			sha1)   mv "$f" "${d}/$(sha1sum   "$f" | cut -d ' ' -f 1)${x}" ;;
-			sha224) mv "$f" "${d}/$(sha224sum "$f" | cut -d ' ' -f 1)${x}" ;;
-			sha256) mv "$f" "${d}/$(sha256sum "$f" | cut -d ' ' -f 1)${x}" ;;
-			sha384) mv "$f" "${d}/$(sha384sum "$f" | cut -d ' ' -f 1)${x}" ;;
-			sha512) mv "$f" "${d}/$(sha512sum "$f" | cut -d ' ' -f 1)${x}" ;;
+			md5)    mv -vi "$f" "${d}/$(md5sum    "$f" | cut -d ' ' -f 1)${e}" ;;
+			sha1)   mv -vi "$f" "${d}/$(sha1sum   "$f" | cut -d ' ' -f 1)${e}" ;;
+			sha224) mv -vi "$f" "${d}/$(sha224sum "$f" | cut -d ' ' -f 1)${e}" ;;
+			sha256) mv -vi "$f" "${d}/$(sha256sum "$f" | cut -d ' ' -f 1)${e}" ;;
+			sha384) mv -vi "$f" "${d}/$(sha384sum "$f" | cut -d ' ' -f 1)${e}" ;;
+			sha512) mv -vi "$f" "${d}/$(sha512sum "$f" | cut -d ' ' -f 1)${e}" ;;
 		esac
 	done
 }
