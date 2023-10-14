@@ -12,34 +12,40 @@
 }
 
 ## LAN
-# Subnet
-.net.lan.subnet()
+# Subnet(s)
+.net.subnet()
 {
-	if [ $# -ne 0 ]; then
-		echo "${FUNCNAME[0]}"
-		echo '└─ Print LAN subnet'
+	local ip_args=('route' 'show' 'scope' 'link')
+
+	if [[ $# -gt 0 && ! -L "/sys/class/net/${1}" ]]; then
+		echo "${FUNCNAME[0]} [iface]?"
+		echo '└─ Print the subnet of interface [iface] or of all interfaces'
 
 		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
 
-	ip r | awk '/src / {print $1}'
+	[ $# -gt 0 ] && ip_args+=('dev' "$1")
+	ip -o -4 "${ip_args[@]}" 2> /dev/null | awk '{print $1}'
 }
 
-# LAN address
-.net.lan.ipv4()
+# IPv4 address(es)
+.net.ipv4()
 {
-	if [ $# -ne 0 ]; then
-		echo "${FUNCNAME[0]}"
-		echo '└─ Print LAN IPv4 address(es)'
+	local ip_args=('address' 'show')
+
+	if [[ $# -gt 0 && ! -L "/sys/class/net/${1}" ]]; then
+		echo "${FUNCNAME[0]} [iface]"
+		echo '└─ Print the IPv4 address of interface [iface] or of all interfaces'
 
 		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
 	fi
 
-	ip r | awk '/src / {print $9}'
+	[ $# -gt 0 ] && ip_args+=('dev' "$1")
+	ip -o -4 "${ip_args[@]}" 2> /dev/null | awk '{print $4}' | cut -d '/' -f 1
 }
 
-# WAN address
-.net.wan.ipv4()
+# WAN IPv4 address
+.net.ipv4.wan()
 {
 	if [ $# -ne 0 ]; then
 		echo "${FUNCNAME[0]}"
