@@ -85,6 +85,21 @@
 	echo "$oldest_name"
 }
 
+.path.slugify()
+{
+	if [[ "$1" =~ ^\-(h|\-help)$ || $# -eq 0 ]]; then
+		echo "${FUNCNAME[0]} [string].."
+		echo '└─ Convert [string].. into slug(s) (URL-friendly string)'
+
+		[[ "$1" =~ ^\-(h|\-help)$ ]] && return 0 || return 1
+	fi
+
+	for s in "$@"; do
+		iconv -ct ascii//TRANSLIT <<< "$s" |
+			sed -E -e 's/[^[:alnum:]]+/-/g' -e 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]'
+	done
+}
+
 .path.rename.lower()
 {
 	if [[ "$1" =~ ^\-(h|\-help)$ || $# -eq 0 ]]; then
